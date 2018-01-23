@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #box{
+            width: 300px;
+            position: relative;
+            top: 50px;
+            left: 300px;
+            box-shadow: 0 2px 20px black;
+            border-radius: 10px;
+        }
+        .box_screen{
+            padding: 8px;
+            border-bottom: 2px solid #666;
+            box-shadow: 0 1px 5px black;
+            background-color: #eee;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+        .box_screen p{
+            display: block;
+            width: 270px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid;
+            padding: 6px;
+            font-size: 18px;
+            box-shadow: 0 0px 5px black;
+            border-radius: 4px;
+        }
+        button{
+            width: 55px;
+            height: 40px;
+            margin: 8px 2px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+             border: 2px solid #555;
+        }
+        button:active{
+            box-shadow: 0 0 5px 5px dodgerblue;
+        }
+        .box_body{
+            background-color: darkcyan;
+            padding: 20px 24px;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+        .bgc_ac5{
+            background-color: #ac5;
+        }
+        .bgc_da1{
+            background-color: #da1;
+        }
+        .bgc{
+            background-color: #888;
+            font-size: 14px;
+            color: #dfd;
+        }
+    </style>
+
+    <<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<div id="box">
+    <div class="box_screen">
+        <p></p>
+    </div>
+    <div class="box_body">
+        <div>
+            <button class="bgc">关机</button>
+            <button class="bgc">归零</button>
+            <button class="bgc">退格</button>
+            <button class="bgc_da1">%</button>
+        </div>
+        <div>
+            <button class="bgc_ac5">7</button>
+            <button class="bgc_ac5">8</button>
+            <button class="bgc_ac5">9</button>
+            <button class="bgc_da1">/</button>
+        </div>
+        <div>
+            <button class="bgc_ac5">4</button>
+            <button class="bgc_ac5">5</button>
+            <button class="bgc_ac5">6</button>
+            <button class="bgc_da1">*</button>
+        </div>
+        <div>
+            <button class="bgc_ac5">1</button>
+            <button class="bgc_ac5">2</button>
+            <button class="bgc_ac5">3</button>
+            <button class="bgc_da1">-</button>
+        </div>
+        <div>
+            <button class="bgc_ac5">0</button>
+            <button class="bgc_ac5">.</button>
+            <button class="bgc_da1">=</button>
+            <button class="bgc_da1">+</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+
+        var $p = $("p");
+
+
+        var a = "", b = "", x = "", num = 0;
+        $p.html(num);
+
+
+        $("button").click(function(){
+
+            var text = $(this).html();
+
+            switch(text){
+                case "归零":
+                    a = '';
+                    b = '';
+                    x = '';
+                    num = 0;
+                    $p.html(num);
+                    return num;
+                case "关机":
+                    a = '';
+                    b = '';
+                    x = '';
+                    num = '';
+                    $p.html(num);
+                    return num;
+
+                case "退格":
+                    if(a != '' && b == ''){
+                        a = a.substring(0, a.length - 1);
+                        $p.html(a);
+                        return a;
+                    }
+                    if(b != ""){
+                        b = b.substring(0, b.length - 1);
+                        $p.html(b);
+                        return b;
+                    }
+                    if($p.html() == '' || $p.html() == 0){
+                        $p.html(0);
+                        return 0;
+                    };
+                case "=":
+                    if(b == ''){
+                        return 0;
+                    };
+                }
+
+
+
+            if(text == "." ){
+                if($p.html().indexOf(".") != -1){
+                    text = "";
+                }
+            }
+
+            if(text == "+" || text == "-" || text == "*" || text == "/" || text == "%" || text == "=" && a != ""){
+                if(b != ""){
+                    var v1 = parseFloat(a);
+                    var v2 = parseFloat(b);
+
+                    switch(x){
+                        case "+":
+                            num = v1 + v2;
+                            $p.html(num);
+                            console.log(a + x + b +'='+ num);
+                            a = num;
+                            b = '';
+                            x = text;
+                            console.log(a, x, b);
+                            return num;
+                        case "-":
+                            num = v1 - v2;
+                            $p.html(num);
+                            console.log(a + x + b +'='+ num);
+                            a = num;
+                            b = '';
+                            x = text;
+                            console.log(a, x, b);
+                            return num;
+                        case "*":
+                            num = v1 * v2;
+                            $p.html(num);
+                            console.log(a + x + b +'='+ num);
+                            a = num;
+                            b = '';
+                            x = text;
+                            console.log(a, x, b);
+                            return num;
+                        case "/":
+                            num = v1 / v2;
+                            $p.html(num);
+                            a = num;
+                            b = '';
+                            x = text;
+                            console.log(a, x, b);
+                            return num;
+                        case "%":
+                            num = v1 % v2;
+                            $p.html(num);
+                            a = num;
+                            b = '';
+                            x = text;
+                            console.log(a, x, b);
+                            return num;
+
+                        case "=":
+                            $p.html(num);
+                            a = num;
+                            b = '';
+                            x = text;
+                            console.log(a, x, b);
+                            return num;
+                    }
+
+
+
+                }else{
+                    x = text;
+                }
+            }else{
+                if(a != "" && x != ""){
+                    b += text;
+                    $p.html(b);
+                }else{
+                    a += text;
+                    $p.html(a);
+                }
+            }
+
+
+        })
+
+
+
+    })
+</script>
+</body>
+</html>
